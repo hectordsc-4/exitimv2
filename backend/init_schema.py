@@ -28,14 +28,15 @@ def _dsn() -> str:
     return url
 
 
-def _table_exists(conn: PgConnection) -> bool:
+def _table_exists(conn: PgConnection, table: str = "exi_usuarios") -> bool:
     with conn.cursor() as cur:
         cur.execute(
             """
             SELECT 1
             FROM information_schema.tables
-            WHERE table_schema = 'public' AND table_name = 'exi_usuarios'
-            """
+            WHERE table_schema = 'public' AND table_name = %s
+            """,
+            (table,),
         )
         return cur.fetchone() is not None
 
@@ -59,24 +60,33 @@ def _apply_sql_file(conn: PgConnection, path: Path) -> None:
         cur.execute(sql)
 
 
+def _apply_migrations(conn: PgConnection) -> None:
+    """Aplica migration_*.sql (ADD COLUMN IF NOT EXISTS, etc.) de forma idempotente."""
+    files = sorted(MIGRATIONS_DIR.glob("migration_*.sql"))
+    if not files:
+        print("[exi] No hay migraciones.")
+        return
+
+    for path in files:
+        try:
+            _apply_sql_file(conn, path)
+            print(f"[exi] Migración OK: {path.name}")
+        except Exception as exc:  # noqa: BLE001
+            # Tabla aún no existe u objeto ya presente: no bloquear el arranque.
+            print(f"[exi] Migración omitida {path.name}: {exc}")
+
+
 def _reset_public_schema(conn: PgConnection) -> None:
-    """Schema viejo/incompleto: recrear public y cargar tables.sql limpio."""
     print("[exi] Schema incompleto detectado → reseteando schema public de exi_db...")
     with conn.cursor() as cur:
         cur.execute("DROP SCHEMA public CASCADE")
         cur.execute("CREATE SCHEMA public")
         cur.execute("GRANT ALL ON SCHEMA public TO CURRENT_USER")
         cur.execute("GRANT ALL ON SCHEMA public TO public")
-        cur.execute("GRANT ALL ON SCHEMA public TO listaviva")
-
-
-def _ensure_tipusr_column(conn: PgConnection) -> None:
-    tipusr = MIGRATIONS_DIR / "migration_usr_tipusr.sql"
-    email = MIGRATIONS_DIR / "migration_add_email.sql"
-    if email.is_file():
-        _apply_sql_file(conn, email)
-    if tipusr.is_file():
-        _apply_sql_file(conn, tipusr)
+        try:
+            cur.execute("GRANT ALL ON SCHEMA public TO listaviva")
+        except Exception:  # noqa: BLE001
+            pass
 
 
 def _can_read_usuarios(conn: PgConnection) -> tuple[bool, str]:
@@ -103,6 +113,23 @@ def _ensure_seed(conn: PgConnection) -> None:
         )
 
 
+def _apply_tables_with_repair(conn: PgConnection) -> None:
+    """Aplica tables.sql; si falla por columnas viejas, migra y reintenta o resetea."""
+    try:
+        _apply_sql_file(conn, SQL_PATH)
+        return
+    except Exception as first_exc:  # noqa: BLE001
+        print(f"[exi] tables.sql falló ({first_exc}); aplicando migraciones y reintentando...")
+        _apply_migrations(conn)
+        try:
+            _apply_sql_file(conn, SQL_PATH)
+            return
+        except Exception as second_exc:  # noqa: BLE001
+            print(f"[exi] Reintento falló ({second_exc}); reseteando schema...")
+            _reset_public_schema(conn)
+            _apply_sql_file(conn, SQL_PATH)
+
+
 def main() -> int:
     if not SQL_PATH.is_file():
         print(f"[exi] No se encontró {SQL_PATH}", file=sys.stderr)
@@ -117,22 +144,22 @@ def main() -> int:
         if not exists:
             print("[exi] Aplicando schema (tables.sql)...")
             _apply_sql_file(conn, SQL_PATH)
+            _apply_migrations(conn)
         elif not cols_ok:
             try:
                 _reset_public_schema(conn)
                 print("[exi] Aplicando tables.sql tras reset...")
                 _apply_sql_file(conn, SQL_PATH)
+                _apply_migrations(conn)
             except Exception as reset_exc:  # noqa: BLE001
-                print(f"[exi] Reset no posible ({reset_exc}); intentando migraciones...")
-                try:
-                    _ensure_tipusr_column(conn)
-                    _apply_sql_file(conn, SQL_PATH)
-                except Exception as mig_exc:  # noqa: BLE001
-                    print(f"[exi] Error reparando schema: {mig_exc}", file=sys.stderr)
-                    return 1
+                print(f"[exi] Reset no posible ({reset_exc}); migraciones + tables.sql...")
+                _apply_migrations(conn)
+                _apply_tables_with_repair(conn)
         else:
-            print("[exi] Esquema ya presente.")
-            _apply_sql_file(conn, SQL_PATH)
+            print("[exi] Esquema ya presente → migraciones + tables.sql idempotente...")
+            # Primero columnas nuevas (evita COMMENT ON columna inexistente)
+            _apply_migrations(conn)
+            _apply_tables_with_repair(conn)
 
         readable, err = _can_read_usuarios(conn)
         if not readable:
