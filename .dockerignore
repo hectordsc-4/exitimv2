@@ -1,0 +1,12 @@
+.git
+.gitignore
+**/__pycache__
+**/*.pyc
+**/.venv
+**/venv
+backend/.env
+backend/outbox
+tools
+*.log
+.DS_Store
+README.md
