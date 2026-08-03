@@ -1,5 +1,6 @@
 outbox/
 .env
+deploy/coolify.env
 __pycache__/
 *.pyc
 .venv/
@@ -11,3 +12,7 @@ tools/*.zip
 tools/pgpass.txt
 *.log
 .DS_Store
+.idea/
+.vscode/
+*.swp
+Thumbs.db
