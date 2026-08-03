@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EXI · Administración</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/styles.css?v=pink1" />
+  <link rel="stylesheet" href="/static/admin.css?v=asi2" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css" />
+</head>
+<body class="admin-body">
+  <aside class="admin-sidebar" aria-label="Navegación">
+    <a href="/home" class="side-item" title="Inicio" data-nav="home">
+      <span class="side-ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M12 3.2 3.5 10.5h2.2V20h5.1v-5.4h2.4V20h5.1v-9.5h2.2L12 3.2z"/></svg>
+      </span>
+      <span>Inicio</span>
+    </a>
+
+    <div class="side-group" id="menu-admin">
+      <button type="button" class="side-item active" id="btn-menu-admin" aria-expanded="false" aria-controls="flyout-admin" title="Administración">
+        <span class="side-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M19.1 12.9a7.4 7.4 0 0 0 .1-1 7.4 7.4 0 0 0-.1-1l2.1-1.6-2-3.4-2.5 1a7.3 7.3 0 0 0-1.7-1l-.4-2.7H9.5l-.4 2.7a7.3 7.3 0 0 0-1.7 1l-2.5-1-2 3.4L5 10.9a7.4 7.4 0 0 0-.1 1 7.4 7.4 0 0 0 .1 1L2.9 14.5l2 3.4 2.5-1a7.3 7.3 0 0 0 1.7 1l.4 2.7h4.9l.4-2.7a7.3 7.3 0 0 0 1.7-1l2.5 1 2-3.4-2.1-1.6zM12 15.5A3.5 3.5 0 1 1 15.5 12 3.5 3.5 0 0 1 12 15.5z"/></svg>
+        </span>
+        <span>Admin</span>
+      </button>
+
+      <div class="side-flyout hidden" id="flyout-admin" role="menu" aria-label="Administración">
+        <p class="flyout-title">Administración</p>
+        <button type="button" class="flyout-link active" role="menuitem" data-section="usuarios">Usuarios</button>
+        <button type="button" class="flyout-link" role="menuitem" data-section="permisos">Permisos</button>
+        <button type="button" class="flyout-link" role="menuitem" data-section="asignaciones">Permisos por usuario</button>
+        <button type="button" class="flyout-link" role="menuitem" data-section="eventos">Eventos</button>
+        <button type="button" class="flyout-link" role="menuitem" data-section="logs">Logs de acceso</button>
+        <button type="button" class="flyout-link" role="menuitem" data-section="sql">SQL</button>
+      </div>
+    </div>
+
+    <div class="side-group" id="menu-general">
+      <button type="button" class="side-item" id="btn-menu-general" aria-expanded="false" aria-controls="flyout-general" title="General">
+        <span class="side-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M4 4h7v7H4zm9 0h7v7h-7zM4 13h7v7H4zm9 0h7v7h-7z"/></svg>
+        </span>
+        <span>General</span>
+      </button>
+      <div class="side-flyout hidden" id="flyout-general" role="menu" aria-label="General">
+        <p class="flyout-title">General</p>
+        <p class="flyout-group">Básicos</p>
+        <a class="flyout-link" role="menuitem" href="/general#periodos">Periodos</a>
+        <a class="flyout-link" role="menuitem" href="/general#tipos-grupo">Tipos de grupo</a>
+        <p class="flyout-group">Centros</p>
+        <a class="flyout-link" role="menuitem" href="/general#centros">Centros</a>
+        <a class="flyout-link" role="menuitem" href="/general#grupos-centro">Centros por grupo</a>
+        <p class="flyout-group">Niños</p>
+        <a class="flyout-link" role="menuitem" href="/general#ninos">Niños</a>
+        <a class="flyout-link" role="menuitem" href="/general#ninos-centro">Niños por centro</a>
+        <a class="flyout-link" role="menuitem" href="/general#ninos-periodos">Periodos de niños</a>
+        <p class="flyout-group">Monitores</p>
+        <a class="flyout-link" role="menuitem" href="/general#monitores">Monitores</a>
+        <a class="flyout-link" role="menuitem" href="/general#monitores-centro">Monitores por centro</a>
+        <a class="flyout-link" role="menuitem" href="/general#monitores-grupos">Monitores por grupo</a>
+        <a class="flyout-link" role="menuitem" href="/general#monitores-periodos">Periodos de monitores</a>
+        <p class="flyout-group">Precios y descuentos</p>
+        <a class="flyout-link" role="menuitem" href="/general#descuentos">Descuentos</a>
+        <a class="flyout-link" role="menuitem" href="/general#precios">Precios</a>
+      </div>
+    </div>
+
+    <div class="side-group" id="menu-asistencia">
+      <button type="button" class="side-item" id="btn-menu-asistencia" aria-expanded="false" aria-controls="flyout-asistencia" title="Asistencia">
+        <span class="side-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M7 3h10a2 2 0 0 1 2 2v16l-7-3-7 3V5a2 2 0 0 1 2-2zm2 5v2h6V8H9zm0 4v2h6v-2H9z"/></svg>
+        </span>
+        <span>Asistencia</span>
+      </button>
+      <div class="side-flyout hidden" id="flyout-asistencia" role="menu" aria-label="Asistencia">
+        <p class="flyout-title">ASISTENCIA</p>
+        <p class="flyout-group">Control de Asistencia</p>
+        <a class="flyout-link" role="menuitem" href="/asistencia#ninos-asistencia">Asistencia Diaria</a>
+        <a class="flyout-link" role="menuitem" href="/asistencia#asistencia-mensual">Resumen Mensual</a>
+      </div>
+    </div>
+  </aside>
+
+  <div class="admin-shell">
+    <header class="admin-topbar">
+      <div class="topbar-brand">
+        <p class="admin-brand">EXI</p>
+        <span class="admin-brand-sub">Administración</span>
+      </div>
+      <div class="admin-top-actions">
+        <span id="user-label" class="admin-user"></span>
+        <button type="button" id="btn-logout" class="pill-btn ghost">Cerrar sesión</button>
+      </div>
+    </header>
+
+    <main class="admin-main">
+      <div class="toolbar-row">
+        <div class="admin-search-wrap">
+          <svg class="search-ico" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M15.5 14h-.8l-.3-.3a6.5 6.5 0 1 0-.7.7l.3.3v.8l5 5 1.5-1.5-5-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/></svg>
+          <input type="search" id="global-search" placeholder="Buscar en la tabla activa…" autocomplete="off" />
+        </div>
+        <div class="pill-row" id="pill-row"></div>
+      </div>
+      <p id="toast" class="admin-toast hidden" role="status"></p>
+
+      <!-- USUARIOS -->
+      <section class="admin-section" id="sec-usuarios" data-section="usuarios">
+        <article class="admin-card">
+          <header class="card-head">
+            <h2>Usuarios</h2>
+            <span class="card-count" id="count-usuarios">0</span>
+          </header>
+          <div class="table-scroll">
+            <table class="data-table" id="tabla-usuarios">
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Nombre</th>
+                  <th>Email</th>
+                  <th>Tipo</th>
+                  <th>Monitor</th>
+                  <th>Alta</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <!-- PERMISOS -->
+      <section class="admin-section hidden" id="sec-permisos" data-section="permisos">
+        <article class="admin-card">
+          <header class="card-head">
+            <h2>Permisos</h2>
+            <span class="card-count" id="count-permisos">0</span>
+          </header>
+          <div class="table-scroll">
+            <table class="data-table" id="tabla-permisos">
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Nombre</th>
+                  <th>Creado</th>
+                  <th>Por</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <!-- ASIGNACIONES -->
+      <section class="admin-section hidden" id="sec-asignaciones" data-section="asignaciones">
+        <article class="admin-card">
+          <header class="card-head">
+            <h2>Permisos por usuario</h2>
+            <span class="card-count" id="count-asignaciones">0</span>
+          </header>
+          <div class="table-scroll">
+            <table class="data-table" id="tabla-asignaciones">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Usuario</th>
+                  <th>Permiso</th>
+                  <th>Asignado</th>
+                  <th>Por</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <!-- EVENTOS -->
+      <section class="admin-section hidden" id="sec-eventos" data-section="eventos">
+        <article class="admin-card">
+          <header class="card-head">
+            <h2>Eventos</h2>
+            <span class="card-count" id="count-eventos">0</span>
+          </header>
+          <div class="table-scroll">
+            <table class="data-table" id="tabla-eventos">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Fecha</th>
+                  <th>Nombre</th>
+                  <th>Centro</th>
+                  <th>Circular</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <!-- LOGS -->
+      <section class="admin-section hidden" id="sec-logs" data-section="logs">
+        <div class="logs-filters">
+          <label>
+            Desde
+            <input type="text" class="exi-date" id="log-desde" placeholder="dd/mm/aaaa" autocomplete="off" />
+          </label>
+          <label>
+            Hasta
+            <input type="text" class="exi-date" id="log-hasta" placeholder="dd/mm/aaaa" autocomplete="off" />
+          </label>
+          <label>
+            Usuario
+            <select id="log-usuario">
+              <option value="">Todos</option>
+            </select>
+          </label>
+          <button type="button" class="pill-btn solid" id="btn-aplicar-logs">Aplicar</button>
+        </div>
+
+        <div class="logs-grid">
+          <article class="admin-card">
+            <header class="card-head">
+              <h2>Accesos por día</h2>
+              <span class="card-count" id="count-logs-total">0</span>
+            </header>
+            <div id="logs-dias" class="logs-dias"></div>
+          </article>
+
+          <article class="admin-card">
+            <header class="card-head">
+              <h2>Mapa horario</h2>
+              <span class="muted-note" id="logs-dia-sel">Selecciona un día</span>
+            </header>
+            <div id="logs-horas" class="hour-grid"></div>
+          </article>
+        </div>
+
+        <article class="admin-card" style="margin-top:1rem">
+          <header class="card-head">
+            <h2>Detalle de entradas</h2>
+            <span class="card-count" id="count-logs">0</span>
+          </header>
+          <div class="table-scroll">
+            <table class="data-table" id="tabla-logs">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Usuario</th>
+                  <th>Fecha / hora</th>
+                  <th>IP</th>
+                  <th>Dispositivo</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <!-- SQL -->
+      <section class="admin-section hidden" id="sec-sql" data-section="sql">
+        <article class="admin-card">
+          <header class="card-head">
+            <h2>Consola SQL</h2>
+            <span class="muted-note">Solo lectura (SELECT) · máx. 1000 filas</span>
+          </header>
+          <p class="sql-hint">
+            En PostgreSQL las tablas van en minúsculas, p. ej.
+            <code>exi_centros</code>, <code>exi_monitores</code>, <code>exi_usuarios</code>.
+          </p>
+          <div class="sql-chips" id="sql-chips">
+            <button type="button" class="pill-btn ghost sql-chip" data-sql="SELECT table_name&#10;FROM information_schema.tables&#10;WHERE table_schema = 'public' AND table_type = 'BASE TABLE'&#10;ORDER BY table_name;">Listar tablas</button>
+            <button type="button" class="pill-btn ghost sql-chip" data-sql="SELECT * FROM exi_centros;">SELECT * FROM exi_centros</button>
+            <button type="button" class="pill-btn ghost sql-chip" data-sql="SELECT * FROM exi_eventos;">SELECT * FROM exi_eventos</button>
+            <button type="button" class="pill-btn ghost sql-chip" data-sql="SELECT * FROM exi_monitores;">SELECT * FROM exi_monitores</button>
+            <button type="button" class="pill-btn ghost sql-chip" data-sql="SELECT * FROM exi_usuarios;">SELECT * FROM exi_usuarios</button>
+          </div>
+          <label class="sql-label" for="sql-editor">Consulta</label>
+          <textarea id="sql-editor" class="sql-editor" rows="8" spellcheck="false" placeholder="SELECT * FROM exi_centros;"></textarea>
+          <div class="sql-actions">
+            <button type="button" class="pill-btn solid" id="btn-sql-run">Ejecutar</button>
+            <button type="button" class="pill-btn ghost" id="btn-sql-clear">Limpiar</button>
+            <span id="sql-meta" class="muted-note"></span>
+          </div>
+        </article>
+
+        <article class="admin-card" style="margin-top:1rem">
+          <header class="card-head">
+            <h2>Resultado</h2>
+            <span class="card-count" id="count-sql">0</span>
+          </header>
+          <div class="table-scroll">
+            <table class="data-table" id="tabla-sql">
+              <thead></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal genérico -->
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-backdrop"></div>
+    <div class="modal-panel">
+      <header class="modal-head">
+        <h3 id="modal-title">Formulario</h3>
+        <button type="button" class="icon-close" data-close="1" aria-label="Cerrar">×</button>
+      </header>
+      <form id="modal-form" class="modal-form"></form>
+      <p id="modal-msg" class="message"></p>
+      <footer class="modal-foot">
+        <button type="button" class="pill-btn ghost" data-close="1">Cancelar</button>
+        <button type="submit" form="modal-form" class="pill-btn solid" id="modal-submit">Guardar</button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Confirmación Sí / No -->
+  <div id="confirm-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+    <div class="modal-backdrop" id="confirm-backdrop"></div>
+    <div class="modal-panel confirm-panel">
+      <header class="modal-head">
+        <h3 id="confirm-title">Confirmar</h3>
+      </header>
+      <p id="confirm-text" class="confirm-text"></p>
+      <footer class="modal-foot">
+        <button type="button" class="pill-btn ghost" id="confirm-no">No</button>
+        <button type="button" class="pill-btn solid danger-solid" id="confirm-yes">Sí</button>
+      </footer>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/l10n/es.js"></script>
+  <script src="/static/config.js?v=dates1"></script>
+  <script src="/static/dates-es.js?v=dates1"></script>
+  <script src="/static/nav-flyout.js?v=dates1"></script>
+  <script src="/static/export-grid.js?v=dates1"></script>
+  <script src="/static/admin.js?v=asi2"></script>
+</body>
+</html>

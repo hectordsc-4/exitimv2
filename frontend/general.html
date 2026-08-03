@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EXI · General</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/styles.css?v=mpe1" />
+  <link rel="stylesheet" href="/static/admin.css?v=comali1" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+</head>
+<body class="admin-body">
+  <aside class="admin-sidebar" aria-label="Navegación">
+    <a href="/home" class="side-item" title="Inicio">
+      <span class="side-ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M12 3.2 3.5 10.5h2.2V20h5.1v-5.4h2.4V20h5.1v-9.5h2.2L12 3.2z"/></svg>
+      </span>
+      <span>Inicio</span>
+    </a>
+
+    <div class="side-group hidden" id="menu-admin">
+      <button type="button" class="side-item" id="btn-menu-admin" aria-expanded="false" aria-controls="flyout-admin" title="Administración">
+        <span class="side-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M19.1 12.9a7.4 7.4 0 0 0 .1-1 7.4 7.4 0 0 0-.1-1l2.1-1.6-2-3.4-2.5 1a7.3 7.3 0 0 0-1.7-1l-.4-2.7H9.5l-.4 2.7a7.3 7.3 0 0 0-1.7 1l-2.5-1-2 3.4L5 10.9a7.4 7.4 0 0 0-.1 1 7.4 7.4 0 0 0 .1 1L2.9 14.5l2 3.4 2.5-1a7.3 7.3 0 0 0 1.7 1l.4 2.7h4.9l.4-2.7a7.3 7.3 0 0 0 1.7-1l2.5 1 2-3.4-2.1-1.6zM12 15.5A3.5 3.5 0 1 1 15.5 12 3.5 3.5 0 0 1 12 15.5z"/></svg>
+        </span>
+        <span>Admin</span>
+      </button>
+      <div class="side-flyout hidden" id="flyout-admin" role="menu">
+        <p class="flyout-title">Administración</p>
+        <a class="flyout-link" href="/admin#usuarios">Usuarios</a>
+        <a class="flyout-link" href="/admin#permisos">Permisos</a>
+        <a class="flyout-link" href="/admin#asignaciones">Permisos por usuario</a>
+        <a class="flyout-link" href="/admin#eventos">Eventos</a>
+        <a class="flyout-link" href="/admin#logs">Logs de acceso</a>
+        <a class="flyout-link" href="/admin#sql">SQL</a>
+      </div>
+    </div>
+
+    <div class="side-group" id="menu-general">
+      <button type="button" class="side-item active" id="btn-menu-general" aria-expanded="false" aria-controls="flyout-general" title="General">
+        <span class="side-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M4 4h7v7H4zm9 0h7v7h-7zM4 13h7v7H4zm9 0h7v7h-7z"/></svg>
+        </span>
+        <span>General</span>
+      </button>
+      <div class="side-flyout hidden" id="flyout-general" role="menu">
+        <p class="flyout-title">General</p>
+        <p class="flyout-group">Básicos</p>
+        <button type="button" class="flyout-link active" data-section="periodos">Periodos</button>
+        <button type="button" class="flyout-link" data-section="tipos-grupo">Tipos de grupo</button>
+        <p class="flyout-group">Centros</p>
+        <button type="button" class="flyout-link" data-section="centros">Centros</button>
+        <button type="button" class="flyout-link" data-section="grupos-centro">Centros por grupo</button>
+        <p class="flyout-group">Niños</p>
+        <button type="button" class="flyout-link" data-section="ninos">Niños</button>
+        <button type="button" class="flyout-link" data-section="ninos-centro">Niños por centro</button>
+        <button type="button" class="flyout-link" data-section="ninos-periodos">Periodos de niños</button>
+        <p class="flyout-group">Monitores</p>
+        <button type="button" class="flyout-link" data-section="monitores">Monitores</button>
+        <button type="button" class="flyout-link" data-section="monitores-centro">Monitores por centro</button>
+        <button type="button" class="flyout-link" data-section="monitores-grupos">Monitores por grupo</button>
+        <button type="button" class="flyout-link" data-section="monitores-periodos">Periodos de monitores</button>
+        <p class="flyout-group">Precios y descuentos</p>
+        <button type="button" class="flyout-link" data-section="descuentos">Descuentos</button>
+        <button type="button" class="flyout-link" data-section="precios">Precios</button>
+      </div>
+    </div>
+
+    <div class="side-group hidden" id="menu-asistencia">
+      <button type="button" class="side-item" id="btn-menu-asistencia" aria-expanded="false" aria-controls="flyout-asistencia" title="Asistencia">
+        <span class="side-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M7 3h10a2 2 0 0 1 2 2v16l-7-3-7 3V5a2 2 0 0 1 2-2zm2 5v2h6V8H9zm0 4v2h6v-2H9z"/></svg>
+        </span>
+        <span>Asistencia</span>
+      </button>
+      <div class="side-flyout hidden" id="flyout-asistencia" role="menu">
+        <p class="flyout-title">ASISTENCIA</p>
+        <p class="flyout-group">Control de Asistencia</p>
+        <a class="flyout-link" href="/asistencia#ninos-asistencia">Asistencia Diaria</a>
+        <a class="flyout-link" href="/asistencia#asistencia-mensual">Resumen Mensual</a>
+      </div>
+    </div>
+  </aside>
+
+  <div class="admin-shell">
+    <header class="admin-topbar">
+      <div class="topbar-brand">
+        <p class="admin-brand">EXI</p>
+        <span class="admin-brand-sub">General</span>
+      </div>
+      <div class="admin-top-actions">
+        <span id="user-label" class="admin-user"></span>
+        <button type="button" id="btn-logout" class="pill-btn ghost">Cerrar sesión</button>
+      </div>
+    </header>
+
+    <main class="admin-main">
+      <div class="toolbar-row">
+        <div class="admin-search-wrap">
+          <svg class="search-ico" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M15.5 14h-.8l-.3-.3a6.5 6.5 0 1 0-.7.7l.3.3v.8l5 5 1.5-1.5-5-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/></svg>
+          <input type="search" id="global-search" placeholder="Buscar periodos…" autocomplete="off" />
+        </div>
+        <div class="pill-row" id="pill-row"></div>
+      </div>
+      <p id="toast" class="admin-toast hidden" role="status"></p>
+
+      <section class="admin-section" id="sec-periodos" data-section="periodos">
+        <article class="admin-card">
+          <header class="card-head">
+            <h2>Periodos de apertura</h2>
+            <span class="card-count" id="count-periodos">0</span>
+          </header>
+          <div class="table-scroll">
+            <table class="data-table" id="tabla-periodos">
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Fecha inicio</th>
+                  <th>Fecha fin</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section class="admin-section hidden" id="sec-centros" data-section="centros">
+        <article class="admin-card">
+          <header class="card-head">
+            <h2>Centros</h2>
+            <span class="card-count" id="count-centros">0</span>
+          </header>
+          <div class="table-scroll">
+            <table class="data-table" id="tabla-centros">
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Nombre</th>
+                  <th>Latitud</th>
+                  <th>Longitud</th>
+                  <th>Población</th>
+                  <th>Capacidad</th>
+                  <th>Nº grupos</th>
+                  <th>Descripción</th>
+                  <th>Creado por</th>
+                  <th>Fecha creación</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section class="admin-section hidden" id="sec-monitores" data-section="monitores">
+        <article class="admin-card">
+          <header class="card-head">
+            <h2>Monitores</h2>
+            <span class="card-count" id="count-monitores">0</span>
+          </header>
+          <div class="table-scroll">
+            <table class="data-table" id="tabla-monitores">
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Nombre</th>
+                  <th>Usuario</th>
+                  <th>Centro</th>
+                  <th>Ciudad</th>
+                  <th>Tipo</th>
+                  <th>Creado por</th>
+                  <th>Fecha creación</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section class="admin-section hidden" id="sec-monitores-centro" data-section="monitores-centro">
+        <div class="logs-filters">
+          <label>
+            Centro
+            <select id="filtro-centro-mon">
+              <option value="">— Selecciona un centro —</option>
+            </select>
+          </label>
+          <button type="button" class="pill-btn ghost" id="btn-ver-todos-mon">Ver todos</button>
+          <span class="logs-filters-spacer"></span>
+          <button type="button" class="pill-btn solid" id="btn-descargar-mon-cen" title="Descargar el grid visible (CSV)">
+            <span class="pill-ico" aria-hidden="true">⬇</span> Descargar
+          </button>
+        </div>
+        <article class="admin-card">
+          <header class="card-head">
+            <h2>Monitores del centro</h2>
+            <span class="card-count" id="count-monitores-centro">0</span>
+          </header>
+          <div class="table-scroll">
+            <table class="data-table" id="tabla-monitores-centro">
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Nombre</th>
+                  <th>Usuario</th>
+                  <th>Centro</th>
+                  <th>Ciudad</th>
+                  <th>Tipo</th>
+                  <th>Creado por</th>
+                  <th>Fecha creación</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section class="admin-section hidden" id="sec-ninos" data-section="ninos">
+        <article class="admin-card">
+          <header class="card-head">
+            <h2>Niños</h2>
+            <span class="card-count" id="count-ninos">0</span>
+          </header>
+          <div class="table-scroll">
+            <table class="data-table" id="tabla-ninos">
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Nombre</th>
+                  <th>Tipo</th>
+                  <th>Apoyo</th>
+                  <th>F. nacimiento</th>
+                  <th>Com. alimenticio</th>
+                  <th>Descripción</th>
+                  <th>Creado por</th>
+                  <th>Fecha creación</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section class="admin-section hidden" id="sec-ninos-centro" data-section="ninos-centro">
+        <div class="logs-filters nic-toolbar">
+          <label>
+            Centro
+            <select id="filtro-centro-nic">
+              <option value="">— Selecciona un centro —</option>
+            </select>
+          </label>
+          <label>
+            Periodo
+            <select id="filtro-periodo-nic">
+              <option value="">— Selecciona un periodo —</option>
+            </select>
+          </label>
+          <span class="nic-numgru-info" id="nic-numgru-info" hidden></span>
+          <span class="logs-filters-spacer"></span>
+          <button type="button" class="pill-btn solid" id="btn-descargar-nic" title="Descargar asignaciones del centro (CSV)">
+            <span class="pill-ico" aria-hidden="true">⬇</span> Descargar
+          </button>
+        </div>
+        <div class="nic-board" id="nic-board">
+          <aside class="nic-pool" aria-label="Niños disponibles">
+            <header class="nic-col-head">
+              <h3>Disponibles</h3>
+              <span class="card-count" id="count-nic-disp">0</span>
+            </header>
+            <div class="nic-pool-filters">
+              <input type="search" id="busca-nic-disp" class="nic-search" placeholder="Buscar niño…" autocomplete="off" />
+              <label class="nic-check-solo" title="Mostrar solo niños sin grupo asignado">
+                <input type="checkbox" id="chk-solo-sin-grupo" />
+                <span>Solo sin grupo</span>
+              </label>
+            </div>
+            <div class="nic-dropzone" id="nic-disponibles" data-zone="pool"></div>
+          </aside>
+          <div class="nic-grupos" id="nic-grupos" aria-label="Grupos del centro"></div>
+        </div>
+        <p class="nic-hint" id="nic-hint">Selecciona un centro y un periodo. Solo aparecen niños marcados en ese periodo. Arrastra a PEQUEÑOS / MEDIANOS / MAYORES (o PEQUEÑOS 1–2 si el centro tiene 4 grupos).</p>
+      </section>
+
+      <section class="admin-section hidden" id="sec-ninos-periodos" data-section="ninos-periodos">
+        <article class="admin-card">
+          <header class="card-head">
+            <h2>Periodos de niños</h2>
+            <span class="card-count" id="count-ninos-periodos">0</span>
+          </header>
+          <p class="nip-hint">Marca las semanas / periodos en los que cada niño asiste al campus.</p>
+          <div class="table-scroll nip-matrix-wrap">
+            <table class="data-table nip-matrix" id="tabla-ninos-periodos">
+              <thead></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section class="admin-section hidden" id="sec-monitores-periodos" data-section="monitores-periodos">
+        <article class="admin-card">
+          <header class="card-head">
+            <h2>Periodos de monitores</h2>
+            <span class="card-count" id="count-monitores-periodos">0</span>
+          </header>
+          <p class="nip-hint">Marca las semanas / periodos en los que cada monitor va al campus.</p>
+          <div class="table-scroll nip-matrix-wrap">
+            <table class="data-table nip-matrix" id="tabla-monitores-periodos">
+              <thead></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section class="admin-section hidden" id="sec-monitores-grupos" data-section="monitores-grupos">
+        <div class="logs-filters nic-toolbar">
+          <label>
+            Centro
+            <select id="filtro-centro-moc">
+              <option value="">— Selecciona un centro —</option>
+            </select>
+          </label>
+          <label>
+            Periodo
+            <select id="filtro-periodo-moc">
+              <option value="">— Selecciona un periodo —</option>
+            </select>
+          </label>
+          <span class="nic-numgru-info" id="moc-numgru-info" hidden></span>
+          <span class="logs-filters-spacer"></span>
+          <button type="button" class="pill-btn solid" id="btn-descargar-moc" title="Descargar asignaciones (CSV)">
+            <span class="pill-ico" aria-hidden="true">⬇</span> Descargar
+          </button>
+        </div>
+        <div class="nic-board" id="moc-board">
+          <aside class="nic-pool" aria-label="Monitores disponibles">
+            <header class="nic-col-head">
+              <h3>Disponibles</h3>
+              <span class="card-count" id="count-moc-disp">0</span>
+            </header>
+            <div class="nic-pool-filters">
+              <input type="search" id="busca-moc-disp" class="nic-search" placeholder="Buscar monitor…" autocomplete="off" />
+            </div>
+            <div class="nic-dropzone" id="moc-disponibles" data-zone="pool"></div>
+          </aside>
+          <div class="nic-grupos" id="moc-grupos" aria-label="Grupos del centro"></div>
+        </div>
+        <p class="nic-hint" id="moc-hint">Selecciona un centro y un periodo. Solo aparecen monitores marcados en ese periodo. Arrastra a cada grupo. Si hay niños con «necesita apoyo», se recomienda un monitor extra.</p>
+      </section>
+
+      <section class="admin-section hidden" id="sec-tipos-grupo" data-section="tipos-grupo">
+        <article class="admin-card">
+          <header class="card-head">
+            <h2>Tipos de grupo</h2>
+            <span class="card-count" id="count-tipos-grupo">0</span>
+          </header>
+          <div class="table-scroll">
+            <table class="data-table" id="tabla-tipos-grupo">
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Descripción</th>
+                  <th>Creado por</th>
+                  <th>Fecha creación</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section class="admin-section hidden" id="sec-descuentos" data-section="descuentos">
+        <article class="admin-card">
+          <header class="card-head">
+            <h2>Descuentos</h2>
+            <span class="card-count" id="count-descuentos">0</span>
+          </header>
+          <div class="table-scroll">
+            <table class="data-table" id="tabla-descuentos">
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Descripción</th>
+                  <th>% Descuento</th>
+                  <th>Creado por</th>
+                  <th>Fecha creación</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section class="admin-section hidden" id="sec-precios" data-section="precios">
+        <article class="admin-card">
+          <header class="card-head">
+            <h2>Precios</h2>
+            <span class="card-count" id="count-precios">0</span>
+          </header>
+          <div class="table-scroll">
+            <table class="data-table" id="tabla-precios">
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Nombre</th>
+                  <th>Valor</th>
+                  <th>Divisa</th>
+                  <th>Creado por</th>
+                  <th>Fecha creación</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section class="admin-section hidden" id="sec-grupos-centro" data-section="grupos-centro">
+        <div class="logs-filters">
+          <label>
+            Centro
+            <select id="filtro-centro-tgc">
+              <option value="">— Selecciona un centro —</option>
+            </select>
+          </label>
+          <button type="button" class="pill-btn ghost" id="btn-ver-todos-tgc">Ver todos</button>
+          <span class="logs-filters-spacer"></span>
+          <button type="button" class="pill-btn solid" id="btn-descargar-tgc" title="Descargar el grid visible (CSV)">
+            <span class="pill-ico" aria-hidden="true">⬇</span> Descargar
+          </button>
+        </div>
+        <article class="admin-card">
+          <header class="card-head">
+            <h2>Centros por grupo</h2>
+            <span class="card-count" id="count-grupos-centro">0</span>
+          </header>
+          <div class="table-scroll">
+            <table class="data-table" id="tabla-grupos-centro">
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Centro</th>
+                  <th>Tipo de grupo</th>
+                  <th>Orden</th>
+                  <th>Niños</th>
+                  <th>Apoyo</th>
+                  <th>Monitores</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-panel modal-panel-wide">
+      <header class="modal-head">
+        <h3 id="modal-title">Formulario</h3>
+        <button type="button" class="icon-close" data-close="1" aria-label="Cerrar">×</button>
+      </header>
+      <form id="modal-form" class="modal-form form-grid-3"></form>
+      <p id="modal-msg" class="message"></p>
+      <footer class="modal-foot">
+        <button type="button" class="pill-btn ghost" id="btn-form-mapa" title="Ver este punto en el mapa">Ver en mapa</button>
+        <span class="modal-foot-spacer"></span>
+        <button type="button" class="pill-btn ghost" data-close="1">Cancelar</button>
+        <button type="submit" form="modal-form" class="pill-btn solid" id="modal-submit">Guardar</button>
+      </footer>
+    </div>
+  </div>
+
+  <div id="map-modal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" id="map-backdrop"></div>
+    <div class="modal-panel modal-panel-map">
+      <header class="modal-head">
+        <h3 id="map-title">Mapa de centros</h3>
+        <button type="button" class="icon-close" id="map-close" aria-label="Cerrar">×</button>
+      </header>
+      <div id="map-canvas" class="map-canvas"></div>
+    </div>
+  </div>
+
+  <div id="confirm-modal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" id="confirm-backdrop"></div>
+    <div class="modal-panel confirm-panel">
+      <header class="modal-head">
+        <h3 id="confirm-title">Confirmar</h3>
+      </header>
+      <p id="confirm-text" class="confirm-text"></p>
+      <footer class="modal-foot">
+        <button type="button" class="pill-btn ghost" id="confirm-no">No</button>
+        <button type="button" class="pill-btn solid danger-solid" id="confirm-yes">Sí</button>
+      </footer>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/l10n/es.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.4/dist/jspdf.plugin.autotable.min.js"></script>
+  <script src="/static/config.js?v=mpe1"></script>
+  <script src="/static/dates-es.js?v=mpe1"></script>
+  <script src="/static/nav-flyout.js?v=mpe1"></script>
+  <script src="/static/export-grid.js?v=asi2"></script>
+  <script src="/static/general.js?v=precios1"></script>
+</body>
+</html>

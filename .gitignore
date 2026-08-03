@@ -1,0 +1,13 @@
+outbox/
+.env
+__pycache__/
+*.pyc
+.venv/
+venv/
+tools/pgdata/
+tools/pgsql/
+tools/pg.log
+tools/*.zip
+tools/pgpass.txt
+*.log
+.DS_Store

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EXI · Asistencia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/styles.css?v=asi2" />
+  <link rel="stylesheet" href="/static/admin.css?v=fuera3" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css" />
+</head>
+<body class="admin-body">
+  <aside class="admin-sidebar" aria-label="Navegación">
+    <a href="/home" class="side-item" title="Inicio">
+      <span class="side-ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M12 3.2 3.5 10.5h2.2V20h5.1v-5.4h2.4V20h5.1v-9.5h2.2L12 3.2z"/></svg>
+      </span>
+      <span>Inicio</span>
+    </a>
+
+    <div class="side-group hidden" id="menu-admin">
+      <button type="button" class="side-item" id="btn-menu-admin" aria-expanded="false" aria-controls="flyout-admin" title="Administración">
+        <span class="side-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M19.1 12.9a7.4 7.4 0 0 0 .1-1 7.4 7.4 0 0 0-.1-1l2.1-1.6-2-3.4-2.5 1a7.3 7.3 0 0 0-1.7-1l-.4-2.7H9.5l-.4 2.7a7.3 7.3 0 0 0-1.7 1l-2.5-1-2 3.4L5 10.9a7.4 7.4 0 0 0-.1 1 7.4 7.4 0 0 0 .1 1L2.9 14.5l2 3.4 2.5-1a7.3 7.3 0 0 0 1.7 1l.4 2.7h4.9l.4-2.7a7.3 7.3 0 0 0 1.7-1l2.5 1 2-3.4-2.1-1.6zM12 15.5A3.5 3.5 0 1 1 15.5 12 3.5 3.5 0 0 1 12 15.5z"/></svg>
+        </span>
+        <span>Admin</span>
+      </button>
+      <div class="side-flyout hidden" id="flyout-admin" role="menu">
+        <p class="flyout-title">Administración</p>
+        <a class="flyout-link" href="/admin#usuarios">Usuarios</a>
+        <a class="flyout-link" href="/admin#permisos">Permisos</a>
+        <a class="flyout-link" href="/admin#asignaciones">Permisos por usuario</a>
+        <a class="flyout-link" href="/admin#eventos">Eventos</a>
+        <a class="flyout-link" href="/admin#logs">Logs de acceso</a>
+        <a class="flyout-link" href="/admin#sql">SQL</a>
+      </div>
+    </div>
+
+    <div class="side-group hidden" id="menu-general">
+      <button type="button" class="side-item" id="btn-menu-general" aria-expanded="false" aria-controls="flyout-general" title="General">
+        <span class="side-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M4 4h7v7H4zm9 0h7v7h-7zM4 13h7v7H4zm9 0h7v7h-7z"/></svg>
+        </span>
+        <span>General</span>
+      </button>
+      <div class="side-flyout hidden" id="flyout-general" role="menu">
+        <p class="flyout-title">General</p>
+        <p class="flyout-group">Básicos</p>
+        <a class="flyout-link" href="/general#periodos">Periodos</a>
+        <a class="flyout-link" href="/general#tipos-grupo">Tipos de grupo</a>
+        <p class="flyout-group">Centros</p>
+        <a class="flyout-link" href="/general#centros">Centros</a>
+        <a class="flyout-link" href="/general#grupos-centro">Centros por grupo</a>
+        <p class="flyout-group">Niños</p>
+        <a class="flyout-link" href="/general#ninos">Niños</a>
+        <a class="flyout-link" href="/general#ninos-centro">Niños por centro</a>
+        <a class="flyout-link" href="/general#ninos-periodos">Periodos de niños</a>
+        <p class="flyout-group">Monitores</p>
+        <a class="flyout-link" href="/general#monitores">Monitores</a>
+        <a class="flyout-link" href="/general#monitores-centro">Monitores por centro</a>
+        <a class="flyout-link" href="/general#monitores-grupos">Monitores por grupo</a>
+        <a class="flyout-link" href="/general#monitores-periodos">Periodos de monitores</a>
+        <p class="flyout-group">Precios y descuentos</p>
+        <a class="flyout-link" href="/general#descuentos">Descuentos</a>
+        <a class="flyout-link" href="/general#precios">Precios</a>
+      </div>
+    </div>
+
+    <div class="side-group" id="menu-asistencia">
+      <button type="button" class="side-item active" id="btn-menu-asistencia" aria-expanded="false" aria-controls="flyout-asistencia" title="Asistencia">
+        <span class="side-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M7 3h10a2 2 0 0 1 2 2v16l-7-3-7 3V5a2 2 0 0 1 2-2zm2 5v2h6V8H9zm0 4v2h6v-2H9z"/></svg>
+        </span>
+        <span>Asistencia</span>
+      </button>
+      <div class="side-flyout hidden" id="flyout-asistencia" role="menu">
+        <p class="flyout-title">ASISTENCIA</p>
+        <p class="flyout-group">Control de Asistencia</p>
+        <button type="button" class="flyout-link active" data-section="ninos-asistencia">Asistencia Diaria</button>
+        <button type="button" class="flyout-link" data-section="asistencia-mensual">Resumen Mensual</button>
+      </div>
+    </div>
+  </aside>
+
+  <div class="admin-shell">
+    <header class="admin-topbar">
+      <div class="topbar-brand">
+        <p class="admin-brand">EXI</p>
+        <span class="admin-brand-sub">Asistencia</span>
+      </div>
+      <div class="admin-top-actions">
+        <span id="user-label" class="admin-user"></span>
+        <button type="button" id="btn-logout" class="pill-btn ghost">Cerrar sesión</button>
+      </div>
+    </header>
+
+    <main class="admin-main">
+      <div class="toolbar-row">
+        <div class="admin-search-wrap">
+          <svg class="search-ico" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M15.5 14h-.8l-.3-.3a6.5 6.5 0 1 0-.7.7l.3.3v.8l5 5 1.5-1.5-5-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/></svg>
+          <input type="search" id="global-search" placeholder="Buscar niño en asistencia…" autocomplete="off" />
+        </div>
+        <div class="pill-row" id="pill-row"></div>
+      </div>
+      <p id="toast" class="admin-toast hidden" role="status"></p>
+
+      <section class="admin-section" id="sec-ninos-asistencia" data-section="ninos-asistencia">
+        <div class="logs-filters nic-toolbar">
+          <label>
+            Día
+            <span class="asi-fecha-wrap">
+              <input type="text" class="exi-date" id="filtro-fecha-asi" placeholder="dd/mm/aaaa" autocomplete="off" />
+              <span class="asi-weekday" id="asi-weekday-label" aria-live="polite"></span>
+            </span>
+          </label>
+          <span class="nic-numgru-info" id="asi-periodo-info" hidden></span>
+          <label>
+            Grupo
+            <select id="filtro-grupo-asi">
+              <option value="">Todos</option>
+            </select>
+          </label>
+          <span class="logs-filters-spacer"></span>
+          <button type="button" class="pill-btn solid" id="btn-descargar-asi" title="Descargar asistencia del día (CSV)">
+            <span class="pill-ico" aria-hidden="true">⬇</span> Descargar
+          </button>
+        </div>
+        <article class="admin-card">
+          <header class="card-head">
+            <div class="asi-card-title">
+              <h2>Asistencia diaria</h2>
+              <span class="asi-dia-badge" id="asi-dia-label" title="Día de asistencia">—</span>
+            </div>
+            <div class="asi-counters" aria-live="polite">
+              <span class="asi-counter asi-counter-vienen" id="count-asi-vienen" title="Niños que han venido">0 vienen</span>
+              <span class="asi-counter asi-counter-comen" id="count-asi-comen" title="Niños que comen"><span class="asi-ico" aria-hidden="true"><img src="/static/icons/burger.png" alt="" width="18" height="18" /></span>0 comen</span>
+              <span class="asi-counter asi-counter-faltan" id="count-asi-faltan" title="Niños sin marcar">0 faltan</span>
+              <span class="card-count" id="count-ninos-asistencia" title="Total listados">0</span>
+            </div>
+          </header>
+          <p class="nip-hint asi-hint-row">
+            <span>Elige el día. Marca <strong>Viene</strong> y/o <strong>Come</strong>. La columna <strong>Alimentación</strong> sale del ficha del niño (para cocina).</span>
+            <button type="button" class="pill-btn ghost asi-meta-toggle" id="btn-toggle-meta-asi" aria-pressed="false" title="Mostrar u ocultar quién registró y cuándo">
+              Ver registro
+            </button>
+          </p>
+          <div class="table-scroll">
+            <table class="data-table asi-hide-meta" id="tabla-ninos-asistencia">
+              <thead>
+                <tr>
+                  <th>Niño</th>
+                  <th>Grupo</th>
+                  <th>Centro</th>
+                  <th class="asi-col-check" title="Ha venido">Viene</th>
+                  <th class="asi-col-check" title="Come"><span class="asi-ico asi-ico-th" aria-hidden="true"><img src="/static/icons/burger.png" alt="" width="20" height="20" /></span><span class="sr-only">Come</span></th>
+                  <th title="Comentario alimenticio para cocina">Alimentación</th>
+                  <th class="asi-col-meta">Registrado por</th>
+                  <th class="asi-col-meta">Fecha registro</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section class="admin-section hidden" id="sec-asistencia-mensual" data-section="asistencia-mensual">
+        <div class="logs-filters nic-toolbar">
+          <label>
+            Mes
+            <input type="month" id="filtro-mes-asi" />
+          </label>
+          <label>
+            Grupo
+            <select id="filtro-grupo-asi-mes">
+              <option value="">Todos</option>
+            </select>
+          </label>
+          <span class="nic-numgru-info" id="asi-mes-info" hidden></span>
+          <span class="logs-filters-spacer"></span>
+          <button type="button" class="pill-btn solid" id="btn-pdf-asi-mes" title="Reporte mensual de asistencia y comedor (PDF)">
+            <span class="pill-ico" aria-hidden="true">⬇</span> Informe PDF
+          </button>
+        </div>
+        <article class="admin-card">
+          <header class="card-head">
+            <h2>Resumen Mensual</h2>
+            <div class="asi-counters" aria-live="polite">
+              <span class="asi-counter asi-counter-vienen" id="count-asi-mes-vienen" title="Suma de días que vienen">0 días vienen</span>
+              <span class="asi-counter asi-counter-comen" id="count-asi-mes-comen" title="Suma de días que comen"><span class="asi-ico" aria-hidden="true"><img src="/static/icons/burger.png" alt="" width="18" height="18" /></span>0 días comen</span>
+              <span class="asi-counter asi-counter-faltan" id="count-asi-mes-faltan" title="Suma de días que no vienen">0 días faltan</span>
+              <span class="card-count" id="count-asi-mes-ninos" title="Niños en el mes">0</span>
+            </div>
+          </header>
+          <p class="nip-hint">
+            Leyenda: <strong>V / VC</strong> = asistencia ·
+            <span class="asi-legend-empty">gris</span> = no viene ·
+            <span class="asi-legend-weekend">azul</span> = sábado/domingo ·
+            <span class="asi-legend-future">blanco</span> = día futuro ·
+            <span class="asi-legend-event">amarillo</span> = día con evento ·
+            <span class="asi-legend-fuera">rojo</span> = fuera de periodo L–V (ya no está en el calendario).
+            Totales solo laborables ya transcurridos dentro de su periodo.
+          </p>
+          <div class="table-scroll asi-mes-scroll">
+            <div class="asi-mes-grid-frame">
+              <table class="data-table asi-mes-table" id="tabla-asistencia-mensual">
+                <thead></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.4/dist/jspdf.plugin.autotable.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/l10n/es.js"></script>
+  <script src="/static/config.js?v=asi5"></script>
+  <script src="/static/dates-es.js?v=asi5"></script>
+  <script src="/static/nav-flyout.js?v=asi5"></script>
+  <script src="/static/export-grid.js?v=fuera3"></script>
+  <script src="/static/asistencia.js?v=fuera3"></script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EXI · Inicio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/styles.css?v=pink1" />
+  <link rel="stylesheet" href="/static/admin.css?v=asi2" />
+</head>
+<body class="admin-body home-body">
+  <aside class="admin-sidebar" aria-label="Navegación">
+    <a href="/home" class="side-item active" title="Inicio" data-nav="home">
+      <span class="side-ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M12 3.2 3.5 10.5h2.2V20h5.1v-5.4h2.4V20h5.1v-9.5h2.2L12 3.2z"/></svg>
+      </span>
+      <span>Inicio</span>
+    </a>
+
+    <div class="side-group hidden" id="menu-admin">
+      <button type="button" class="side-item" id="btn-menu-admin" aria-expanded="false" aria-controls="flyout-admin" title="Administración">
+        <span class="side-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M19.1 12.9a7.4 7.4 0 0 0 .1-1 7.4 7.4 0 0 0-.1-1l2.1-1.6-2-3.4-2.5 1a7.3 7.3 0 0 0-1.7-1l-.4-2.7H9.5l-.4 2.7a7.3 7.3 0 0 0-1.7 1l-2.5-1-2 3.4L5 10.9a7.4 7.4 0 0 0-.1 1 7.4 7.4 0 0 0 .1 1L2.9 14.5l2 3.4 2.5-1a7.3 7.3 0 0 0 1.7 1l.4 2.7h4.9l.4-2.7a7.3 7.3 0 0 0 1.7-1l2.5 1 2-3.4-2.1-1.6zM12 15.5A3.5 3.5 0 1 1 15.5 12 3.5 3.5 0 0 1 12 15.5z"/></svg>
+        </span>
+        <span>Admin</span>
+      </button>
+
+      <div class="side-flyout hidden" id="flyout-admin" role="menu" aria-label="Administración">
+        <p class="flyout-title">Administración</p>
+        <a class="flyout-link" role="menuitem" href="/admin#usuarios">Usuarios</a>
+        <a class="flyout-link" role="menuitem" href="/admin#permisos">Permisos</a>
+        <a class="flyout-link" role="menuitem" href="/admin#asignaciones">Permisos por usuario</a>
+        <a class="flyout-link" role="menuitem" href="/admin#eventos">Eventos</a>
+        <a class="flyout-link" role="menuitem" href="/admin#logs">Logs de acceso</a>
+        <a class="flyout-link" role="menuitem" href="/admin#sql">SQL</a>
+      </div>
+    </div>
+
+    <div class="side-group hidden" id="menu-general">
+      <button type="button" class="side-item" id="btn-menu-general" aria-expanded="false" aria-controls="flyout-general" title="General">
+        <span class="side-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M4 4h7v7H4zm9 0h7v7h-7zM4 13h7v7H4zm9 0h7v7h-7z"/></svg>
+        </span>
+        <span>General</span>
+      </button>
+
+      <div class="side-flyout hidden" id="flyout-general" role="menu" aria-label="General">
+        <p class="flyout-title">General</p>
+        <p class="flyout-group">Básicos</p>
+        <a class="flyout-link" role="menuitem" href="/general#periodos">Periodos</a>
+        <a class="flyout-link" role="menuitem" href="/general#tipos-grupo">Tipos de grupo</a>
+        <p class="flyout-group">Centros</p>
+        <a class="flyout-link" role="menuitem" href="/general#centros">Centros</a>
+        <a class="flyout-link" role="menuitem" href="/general#grupos-centro">Centros por grupo</a>
+        <p class="flyout-group">Niños</p>
+        <a class="flyout-link" role="menuitem" href="/general#ninos">Niños</a>
+        <a class="flyout-link" role="menuitem" href="/general#ninos-centro">Niños por centro</a>
+        <a class="flyout-link" role="menuitem" href="/general#ninos-periodos">Periodos de niños</a>
+        <p class="flyout-group">Monitores</p>
+        <a class="flyout-link" role="menuitem" href="/general#monitores">Monitores</a>
+        <a class="flyout-link" role="menuitem" href="/general#monitores-centro">Monitores por centro</a>
+        <a class="flyout-link" role="menuitem" href="/general#monitores-grupos">Monitores por grupo</a>
+        <a class="flyout-link" role="menuitem" href="/general#monitores-periodos">Periodos de monitores</a>
+        <p class="flyout-group">Precios y descuentos</p>
+        <a class="flyout-link" role="menuitem" href="/general#descuentos">Descuentos</a>
+        <a class="flyout-link" role="menuitem" href="/general#precios">Precios</a>
+      </div>
+    </div>
+
+    <div class="side-group hidden" id="menu-asistencia">
+      <button type="button" class="side-item" id="btn-menu-asistencia" aria-expanded="false" aria-controls="flyout-asistencia" title="Asistencia">
+        <span class="side-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M7 3h10a2 2 0 0 1 2 2v16l-7-3-7 3V5a2 2 0 0 1 2-2zm2 5v2h6V8H9zm0 4v2h6v-2H9z"/></svg>
+        </span>
+        <span>Asistencia</span>
+      </button>
+      <div class="side-flyout hidden" id="flyout-asistencia" role="menu" aria-label="Asistencia">
+        <p class="flyout-title">ASISTENCIA</p>
+        <p class="flyout-group">Control de Asistencia</p>
+        <a class="flyout-link" role="menuitem" href="/asistencia#ninos-asistencia">Asistencia Diaria</a>
+        <a class="flyout-link" role="menuitem" href="/asistencia#asistencia-mensual">Resumen Mensual</a>
+      </div>
+    </div>
+  </aside>
+
+  <div class="admin-shell">
+    <header class="admin-topbar">
+      <div class="topbar-brand">
+        <p class="admin-brand">EXI</p>
+        <span class="admin-brand-sub">Inicio</span>
+      </div>
+      <div class="admin-top-actions">
+        <span id="user-label" class="admin-user"></span>
+        <button type="button" id="btn-logout" class="pill-btn ghost">Cerrar sesión</button>
+      </div>
+    </header>
+
+    <main class="admin-main home-main">
+      <div class="home-panels">
+        <section class="home-panel" aria-labelledby="panel-log-title">
+          <header class="home-panel-head">
+            <h2 id="panel-log-title">ÚLTIMO LOG</h2>
+            <span class="home-panel-badge" id="log-badge">1</span>
+          </header>
+          <div class="home-panel-body">
+            <article class="home-mini-card" id="ultimo-log-card">
+              <div class="home-mini-top">
+                <strong id="log-usuario">—</strong>
+                <span class="home-mini-side" id="log-hora">—</span>
+              </div>
+              <div class="home-mini-tags">
+                <span class="badge nic-tipo" id="log-id-badge">#—</span>
+              </div>
+              <div class="home-mini-meta">
+                <span id="log-fecha">—</span>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="home-panel" aria-labelledby="panel-eve-title">
+          <header class="home-panel-head">
+            <h2 id="panel-eve-title">EVENTOS</h2>
+            <span class="home-panel-badge" id="eve-badge">0</span>
+          </header>
+          <div class="home-panel-body">
+            <div class="home-events" id="home-events" aria-live="polite"></div>
+          </div>
+        </section>
+
+        <section class="home-panel" aria-labelledby="panel-cal-title">
+          <header class="home-panel-head">
+            <h2 id="panel-cal-title">CALENDARIO</h2>
+            <span class="home-panel-badge" id="cal-badge">—</span>
+          </header>
+          <div class="home-panel-body">
+            <div class="home-cal" id="home-calendar" aria-live="polite"></div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script src="/static/config.js?v=menu1"></script>
+  <script src="/static/nav-flyout.js?v=menu1"></script>
+  <script src="/static/home.js?v=asi2"></script>
+</body>
+</html>
